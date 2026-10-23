@@ -61,7 +61,7 @@ const W=[['ice cream','アイスクリーム','ice'],['chocolate','チョコレ�
 const IM={};for(const k in IMG){const i=new Image();i.src=IMG[k];IM[k]=i}
 const N=W.length, COLS=['#ff9ec4','#9be7ff','#b9f58a','#ffd98a'];
 const $=id=>document.getElementById(id);
-const ES=()=>Math.min(w/4-16,104);
+const ES=()=>Math.min((w/4)*0.66,82);
 const cv=$('c'),ctx=cv.getContext('2d');
 let w=0,h=0,dpr=1;
 function fit(){dpr=Math.min(window.devicePixelRatio||1,2);w=cv.clientWidth;h=cv.clientHeight;cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
@@ -123,7 +123,10 @@ function update(dt){
  enemies.forEach(e=>{e.x+=e.vx*dt;e.y+=e.vy*dt});
  bullets.forEach(b=>{if(b.t&&enemies.includes(b.t)){const dx=ex(b.t)-b.x,dy=b.t.y-b.y,d=Math.hypot(dx,dy)||1;b.vx=dx/d*1000;b.vy=dy/d*1000}b.x+=b.vx*dt;b.y+=b.vy*dt});
  const ew=ES();
- for(const b of bullets){for(const e of enemies){if(Math.abs(b.x-ex(e))<ew/2+4&&Math.abs(b.y-e.y)<ew/2+4){b.dead=true;hit(e);break}}
+ for(const b of bullets){
+  // 弾はタップしたUFOだけを対象にする。別レーンのUFOは弾を遮らない。
+  const e=b.t;
+  if(e&&enemies.includes(e)&&Math.abs(b.x-ex(e))<ew/2+4&&Math.abs(b.y-e.y)<ew/2+4){b.dead=true;hit(e)}
   if(state!=='play')break}
  bullets=bullets.filter(b=>!b.dead&&b.y>-20&&b.x>-20&&b.x<w+20);
  if(state==='play'){const c=enemies.find(e=>e.ok);if(c){const edge=ES()/2;const missed=c.y>h-62-edge;if(missed){boom(ex(c),c.y,'#ffd447');dropped()}}}}
