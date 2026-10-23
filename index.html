@@ -97,7 +97,7 @@ function hit(e){
   flash(combo>1?'せいかい！ '+combo+'れんぞく':'せいかい！','#5eead4');enemies=[];qi++;state='wait';hud();tm=setTimeout(nextQ,800)}
  else{lives--;combo=0;addMiss();beep(150,.35,'sawtooth',.12);flash('ざんねん…','#ff7a93');enemies=enemies.filter(x=>x!==e);hud();if(lives<=0){state='wait';tm=setTimeout(()=>finish(false),700)}}}
 function dropped(){
- lives--;combo=0;addMiss();beep(150,.35,'sawtooth',.12);flash('こたえは「'+cur[1]+'」','#ffd447');enemies=[];qi++;state='wait';hud();
+ lives--;combo=0;addMiss();beep(150,.35,'sawtooth',.12);flash('ざんねん！','#ffd447');enemies=[];qi++;state='wait';hud();
  tm=setTimeout(()=>lives<=0?finish(false):nextQ(),1500)}
 function finish(clear){
  state='over';$('qbox').hidden=true;
