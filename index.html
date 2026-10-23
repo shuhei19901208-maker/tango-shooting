@@ -84,9 +84,9 @@ function nextQ(){
  cur=deck[qi];
  const others=shuffle(W.filter(x=>x[0]!==cur[0]&&x[1]!==cur[1])).slice(0,3);
  const T=Math.max(8,16-qi*.4);
- enemies=shuffle([cur,...others]).map((o,i)=>{const sp=Math.max(42,h/T);return {en:o[0],ja:o[1],im:o[2],ok:o===cur,dir:'top',x:(.16+Math.random()*.68)*w,y:-70-Math.random()*80,vx:0,vy:sp,ph:Math.random()*6,col:COLS[i]}});
+ enemies=shuffle([cur,...others]).map((o,i)=>{const sp=Math.max(42,h/T);return {en:o[0],ja:o[1],im:o[2],ok:o===cur,dir:'top',x:((i+.5)/4)*w,y:-70,vx:0,vy:sp,ph:0,col:COLS[i]}});
  $('word').textContent=cur[0];hud();say(cur[0]);state='play'}
-const ex=e=>e.x+Math.sin(time*1.3+e.ph)*6;
+const ex=e=>e.x;
 const boom=(x,y,c)=>{for(let i=0;i<16;i++){const a=Math.random()*6.28,s=60+Math.random()*180;parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:.7,c})}};
 const flash=(text,col)=>{msg={t:1.3,text,col}};
 function addMiss(){if(!miss.includes(cur))miss.push(cur)}
